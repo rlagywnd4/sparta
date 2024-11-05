@@ -64,19 +64,89 @@
       }
     </style>
 
-    <script>
-      $(document).ready(function () {
-	      let url = "http://spartacodingclub.shop/sparta_api/weather/seoul";
+<script type="module">
+      // Firebase SDK 라이브러리 가져오기
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+    import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+    import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+
+    // Firebase 구성 정보 설정
+    const firebaseConfig = {
+    apiKey: "AIzaSyDeaXszb8x4FnlEG-ohKcfKxmEpAlXBOzU",
+    authDomain: "sparta-9c41c.firebaseapp.com",
+    projectId: "sparta-9c41c",
+    storageBucket: "sparta-9c41c.firebasestorage.app",
+    messagingSenderId: "99131007852",
+    appId: "1:99131007852:web:038d0e529aea9fdb1b8949",
+    measurementId: "G-1TZ8M4G2QZ"
+    };
+
+    // Firebase 인스턴스 초기화
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    $("#postingbtn").click(async function () {
+      let image = $('#image').val();
+            let title = $('#title').val();
+            let star = $('#star').val();
+            let comment = $('#comment').val();
+        let doc = {
+          'image':image,
+          'title':title,
+          'star':star,
+          'comment':comment,
+        };
+        await addDoc(collection(db, "movies"), doc);
+        alert('저장완료');
+        window.location.reload();
+    })
+
+    // 더워요추워요
+      let url = "http://spartacodingclub.shop/sparta_api/weather/seoul";
         fetch(url).then(res => res.json()).then(data => {
           // let temperture = data.temp;
           let temp = data['temp'];
-          $('#msg').text(temp);
+          if(temp > 20){
+            $('#msg').text("더워요");
+          }else {
+            $('#msg').text("추워요");
+          }
         })
+
+        // hostingbox toggle
+      $("#savebtn").click(async function () {
+        $('#hostingbox').toggle();
       })
 
-      function openclose(){
-        $('#hostingbox').toggle();
-      }
+      // get Docs
+      let docs = await getDocs(collection(db, "movies"));
+      docs.forEach((doc) => {
+          let row = doc.data();
+
+        let image = row['image'];
+        let title = row['title'];
+        let comment = row['comment'];
+        let star = row['star'];
+
+        let temp_html =`<div class="col">
+          <div class="card h-100">
+            <img
+              src="${image}"
+              class="card-img-top"
+              alt="..."
+            />
+            <div class="card-body">
+              <h5 class="card-title">${title}</h5>
+              <p class="card-text">${star}</p>
+              <p class="card-text">${comment}</p>
+            </div>
+          </div>
+        </div>`;
+
+        $('#card').append(temp_html);
+      }); 
 
       function makeCard(){
         let image = $('#image').val();
@@ -169,7 +239,7 @@
             역병에 신음하는 산하. 정체 모를 악에 맞서 백성을 구원할 희망은 오직
             세자뿐이다.
           </p>
-          <button type="button" class="btn btn-outline-light" onclick="openclose()">
+          <button type="button" class="btn btn-outline-light" id="savebtn">
             영화 기록하기
           </button>
           <button type="button" class="btn btn-outline-light">상세 정보</button>
@@ -216,68 +286,12 @@
         />
         <label for="floatingInput">추천 이유</label>
       </div>
-        <button type="button" class="btn btn-danger" onclick="makeCard()">기록하기</button>
+        <button type="button" class="btn btn-danger" id="postingbtn">기록하기</button>
       </div>
     </div>
 
     <div class="mycards">
       <div class="row row-cols-1 row-cols-md-4 g-4" id="card">
-        <div class="col">
-          <div class="card h-100">
-            <img
-              src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
-              class="card-img-top"
-              alt="..."
-            />
-            <div class="card-body">
-              <h5 class="card-title">영화 제목</h5>
-              <p class="card-text">⭐⭐⭐</p>
-              <p class="card-text">영화 코멘트</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100">
-            <img
-              src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
-              class="card-img-top"
-              alt="..."
-            />
-            <div class="card-body">
-              <h5 class="card-title">영화 제목</h5>
-              <p class="card-text">⭐⭐⭐</p>
-              <p class="card-text">영화 코멘트</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100">
-            <img
-              src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
-              class="card-img-top"
-              alt="..."
-            />
-            <div class="card-body">
-              <h5 class="card-title">영화 제목</h5>
-              <p class="card-text">⭐⭐⭐</p>
-              <p class="card-text">영화 코멘트</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100">
-            <img
-              src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
-              class="card-img-top"
-              alt="..."
-            />
-            <div class="card-body">
-              <h5 class="card-title">영화 제목</h5>
-              <p class="card-text">⭐⭐⭐</p>
-              <p class="card-text">영화 코멘트</p>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </body>
