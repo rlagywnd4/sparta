@@ -88,13 +88,22 @@
 
     // 카드 개수
     let cardSum = 2;
+    let image;
+    let title;
 
     // 카드 추가하기
     $("#postingbtn").click(async function () {
-      let image = $('#image').val();
-            let title = $('#title').val();
-            let star = $('#star').val();
-            let comment = $('#comment').val();
+      let randomMember = "https://randomuser.me/api/";
+        await fetch(randomMember).then(res => res.json()).then(data => {
+          console.log("dfsdfasffafdasdfasdf")
+          image = data.results[0].picture.large;
+          title = data.results[0].name.title+ ". " + data.results[0].name.last;
+          console.log(data.results[0].name.last);
+        })
+        let star = $('#star').val();
+        let comment = $('#comment').val();
+        console.log("image : " +image);
+        console.log("title : " +title);
       //   let doc = {
       //     'image':image,
       //     'title':title,
@@ -297,7 +306,7 @@
           class="form-control"
           id="image"
           placeholder="영화 이미지 주소"
-          value="https://images.unsplash.com/photo-1481070555726-e2fe8357725c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2235&q=80"
+          value="https://cataas.com/cat"
         />
         <label for="floatingInput">영화 이미지 주소</label>
       </div>
