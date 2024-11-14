@@ -4,12 +4,11 @@ import java.util.*;
 
 public class assignment {
     public static void main(String[] args) {
-        System.out.println("start");
-        boolean endingRecipe = false;
-        char selectedStorage;
+
         List<String> listStorage = new ArrayList<>();
-        Set<String> setStorage = new TreeSet<>();
+        Set<String> setStorage = new HashSet<>();
         Map<Integer, String> mapStorage = new HashMap<>();
+
         int circuitKey = 1;
 
         Scanner sc = new Scanner(System.in);
@@ -18,29 +17,26 @@ public class assignment {
         String title = sc.nextLine();
 
         if (dataStructure == "List") {
-            while (!endingRecipe) {
+            while (true) {
                 String content = sc.nextLine();
                 if (content.equals("끝")) {
-                    endingRecipe = true;
                     break;
                 }
                 listStorage.add(content);
             }
         } else if (dataStructure == "Set") {
-            while (!endingRecipe) {
+            while (true) {
                 String content = sc.nextLine();
                 if (content.equals("끝")) {
-                    endingRecipe = true;
                     break;
                 }
                 setStorage.add(circuitKey + ". " +content);
                 circuitKey++;
             }
         } else {
-            while (!endingRecipe) {
+            while (true) {
                 String content = sc.nextLine();
                 if (content.equals("끝")) {
-                    endingRecipe = true;
                     break;
                 }
             mapStorage.put(circuitKey, content);
