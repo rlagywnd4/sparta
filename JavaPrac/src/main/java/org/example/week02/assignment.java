@@ -16,7 +16,7 @@ public class assignment {
 
         String title = sc.nextLine();
 
-        if (dataStructure == "List") {
+        if (dataStructure.equals("List")) {
             while (true) {
                 String content = sc.nextLine();
                 if (content.equals("끝")) {
@@ -24,7 +24,7 @@ public class assignment {
                 }
                 listStorage.add(content);
             }
-        } else if (dataStructure == "Set") {
+        } else if (dataStructure.equals("Set")) {
             while (true) {
                 String content = sc.nextLine();
                 if (content.equals("끝")) {
@@ -45,11 +45,11 @@ public class assignment {
         }
 
         System.out.println("[ " + dataStructure + "으로 저장된 " + title + " ]");
-        if (dataStructure == "List") {
+        if (dataStructure.equals("List")) {
                 for (int i = 0; i < listStorage.size(); i++) {
                     System.out.println((i + 1) + ". " + listStorage.get(i));
                 }
-        } else if (dataStructure == "Set") {
+        } else if (dataStructure.equals("Set")) {
                 for (int i = 1; i <= setStorage.size(); i++) {
                     System.out.println(setStorage.contains(i + ". "));
                 }
